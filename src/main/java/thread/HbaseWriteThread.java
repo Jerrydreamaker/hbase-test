@@ -2,7 +2,7 @@ package thread; /**
  * Created by Dreamaker on 2017/11/14.
  */
 import org.apache.hadoop.hbase.client.Connection;
-import util.common;
+import util.HbaseUtil;
 
 import java.io.IOException;
 
@@ -42,7 +42,7 @@ public class HbaseWriteThread extends Thread {
         System.out.println("Thread-" + this.threadOrder + ":  Start to work!");
         for (int i=0;i<fileNum;i++) {
             try {
-                common.PutData(connection, tableName, Integer.toString(threadOrder* (int)fileNum + i), "test_columnFamily", "1",writeBuffer);
+                HbaseUtil.PutData(connection, tableName, Integer.toString(threadOrder* (int)fileNum + i), "test_columnFamily", "1",writeBuffer);
             } catch (IOException e) {
                 e.printStackTrace();
             }

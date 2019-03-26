@@ -11,7 +11,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.*;
 import thread.HbaseReadThread;
 import thread.HbaseWriteThread;
-import util.common;
+import util.SizeTransformUtil;
+import util.HbaseUtil;
 
 /**
  *测试主类。
@@ -69,7 +70,7 @@ public class HbaseDemo {
                 }
                 else if (args[i].equals("-fileSize")){
                     i++;
-                    fileSize= common.parseSize(args[i]);
+                    fileSize= SizeTransformUtil.parseSize(args[i]);
                 }
             }
         }
@@ -95,14 +96,14 @@ public class HbaseDemo {
         threadTime=new long[threadNum];//根据线程个数创建线程执行时间记录数组。
         Connection[] connections=new Connection[threadNum];//根据线程个数创建连接池。
         for (int i=0;i<threadNum;i++){
-            connections[i]=common.getConnection();
+            connections[i]= HbaseUtil.getConnection();
         }
 
         switch (optype.ordinal()) {
             //如果操作类型是write。
             case (0):{
-                Connection connection=common.getConnection();//获取连接
-                common.CreateTable(connection,tableName, "test_columnFamily");//创建表
+                Connection connection= HbaseUtil.getConnection();//获取连接
+                HbaseUtil.CreateTable(connection,tableName, "test_columnFamily");//创建表
                 connection.close();//关闭连接
 
                 execStartTime=System.currentTimeMillis();//记录任务开始时间

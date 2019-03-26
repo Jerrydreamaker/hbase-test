@@ -3,7 +3,7 @@ package thread; /**
  */
 import java.io.IOException;
 import org.apache.hadoop.hbase.client.Connection;
-import util.common;
+import util.HbaseUtil;
 
 /**
  * 从hhase表中读取数据。
@@ -31,7 +31,7 @@ public class HbaseReadThread extends Thread {
         long threadStartTime=System.currentTimeMillis();
         for (int i=0;i<fileNum;i++){
             try {
-                common.GetData(connection,tableName, Integer.toString(threadOrder*(int)fileNum+i), "test_columnFamily","1");
+                HbaseUtil.GetData(connection,tableName, Integer.toString(threadOrder*(int)fileNum+i), "test_columnFamily","1");
             } catch (IOException e) {
                 e.printStackTrace();
             }
